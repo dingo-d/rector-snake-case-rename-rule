@@ -1,0 +1,20 @@
+# Exclude these files from release archives.
+# This will also make them unavailable when using Composer with `--prefer-dist`.
+# If you develop for Eightshift coding standard using Composer, use `--prefer-source`.
+# https://blog.madewithlove.be/post/gitattributes/
+# Taken from WPCS https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/
+/.github export-ignore
+/.phpcs.xml.dist export-ignore
+/phpunit.xml.dist export-ignore
+
+/Eightshift/Tests export-ignore
+/Tests export-ignore
+
+# Auto detect text files and perform LF normalization
+# http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/
+* text=auto
+
+# The above will handle all files NOT found below
+*.md text
+*.php text
+*.inc text

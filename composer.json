@@ -1,0 +1,63 @@
+{
+	"name": "dingo-d/rector-snake-case-rename-rule",
+	"description": "This repository contains the RectorPHP rule for converting Snake_Case class names into PascalCase.",
+	"keywords": [
+		"composer",
+		"rector"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Denis Zoljom",
+			"email": "denis.zoljom@gmail.com",
+			"homepage": "https://madebydenis.com/",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/dingo-d/rector-snake-case-rename-rule/issues",
+		"source": "https://github.com/dingo-d/rector-snake-case-rename-rule"
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+		"infinum/eightshift-coding-standards": "1.3.0",
+		"php-stubs/acf-pro-stubs": "^5.9.5",
+		"php-stubs/wordpress-stubs": "^5.7",
+		"phpunit/phpunit": "^9.5",
+		"rector/rector": "^0.12.13",
+		"symplify/easy-coding-standard": "^10.0",
+		"szepeviktor/phpstan-wordpress": "^1.0.2"
+	},
+	"require": {
+		"php": "^7.4 || <8.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Test\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Utils\\Rector\\": "utils/rector/src",
+			"Utils\\Rector\\Tests\\": "utils/rector/tests"
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"sort-packages": true,
+		"optimize-autoloader": true,
+		"process-timeout": 2000,
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"analyze": "@php ./vendor/bin/phpstan analyze",
+		"standards:check": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs",
+		"standards:fix": "@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf",
+		"rector:dryrun": "@php ./vendor/bin/rector process --dry-run",
+		"rector:run": "@php ./vendor/bin/rector process",
+		"test:run": "@php ./vendor/bin/phpunit utils/rector/tests/Rector/Renaming/RenameClassNameRector --testdox"
+	}
+}

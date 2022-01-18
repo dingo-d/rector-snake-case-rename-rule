@@ -1,0 +1,12 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    level: 6
+    inferPrivatePropertyTypeFromConstructor: true
+    paths:
+        - src/
+    excludePaths:
+        - src/WpCli
+    bootstrapFiles:
+        - %rootDir%/../../php-stubs/acf-pro-stubs/acf-pro-stubs.php
+        - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
