@@ -71,16 +71,18 @@ CODE_SAMPLE
 	 */
 	public function refactor(Node $node): ?Node
 	{
-		if ($node instanceof Class_) {
-			$oldName = $node->name->toLowerString();
-			$names = explode('_', $oldName);
+        $oldName = $node->name->toLowerString();
+        if (! str_contains($oldName, '_')) {
+            return null;
+        }
 
-			// Take name parts, capitalize the first letter and return a string.
-			$newName = implode('', array_map(fn($namePart) => ucfirst($namePart), $names));
+        $names = explode('_', $oldName);
 
-			return $this->classRenamer->renameNode($node, [$oldName => $newName]);
-		}
+        // Take name parts, capitalize the first letter and return a string.
+        $newName = implode('', array_map(fn($namePart) => ucfirst($namePart), $names));
 
-		return null;
+        $node->name = new Node\Identifier($newName);
+
+        return $node;
 	}
 }
