@@ -34,8 +34,8 @@ final class RenameClassNameRector extends AbstractRector
 	{
 		return new RuleDefinition(
 			'Renames the Snake_Case classnames into PascalCase, e.g. Some_Class_Name to SomeClassName', [
-			new CodeSample(
-				<<<'CODE_SAMPLE'
+				new CodeSample(
+					<<<'CODE_SAMPLE'
 class Some_Class_Name
 {
 	public function run()
@@ -44,7 +44,7 @@ class Some_Class_Name
 	}
 }
 CODE_SAMPLE
-, <<<'CODE_SAMPLE'
+					, <<<'CODE_SAMPLE'
 class SomeClassName
 {
 	public function run()
@@ -53,8 +53,8 @@ class SomeClassName
 	}
 }
 CODE_SAMPLE
-			)
-		]
+				)
+			]
 		);
 	}
 
@@ -71,18 +71,33 @@ CODE_SAMPLE
 	 */
 	public function refactor(Node $node): ?Node
 	{
-        $oldName = $node->name->toLowerString();
-        if (! str_contains($oldName, '_')) {
-            return null;
-        }
+		$oldName = $node->name->toLowerString();
+		if (!$this->str_contains($oldName, '_')) {
+			return null;
+		}
 
-        $names = explode('_', $oldName);
+		$names = explode('_', $oldName);
 
-        // Take name parts, capitalize the first letter and return a string.
-        $newName = implode('', array_map(fn($namePart) => ucfirst($namePart), $names));
+		// Take name parts, capitalize the first letter and return a string.
+		$newName = implode('', array_map(fn($namePart) => ucfirst($namePart), $names));
 
-        $node->name = new Node\Identifier($newName);
+		$node->name = new Node\Identifier($newName);
 
-        return $node;
+		return $node;
+	}
+
+	/**
+	 * PHP 7 polyfill for the PHP 8 str_contains function
+	 *
+	 * @link https://www.php.net/manual/en/function.str-contains.php#125977
+	 *
+	 * @param string $haystack String to search in.
+	 * @param string $needle String to search for in haystack.
+	 *
+	 * @return bool
+	 */
+	private function str_contains(string $haystack, string $needle): bool
+	{
+		return $needle !== '' && mb_strpos($haystack, $needle) !== false;
 	}
 }
